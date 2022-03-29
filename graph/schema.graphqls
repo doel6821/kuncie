@@ -1,0 +1,85 @@
+
+
+input NewCart {
+  sku: String!
+  quantity: Int!
+}
+
+input Carts{
+  contents: [NewCart!]!
+}
+
+input NewProduct {
+  sku: String!
+  name: String!
+  price: Float!
+  quantity: Int!
+}
+
+input NewPromo {
+  sku: String!
+	promotype: String!
+  promodetail: PromoDetail!
+}
+
+input PromoDetail {
+	bonussku: String
+	minqty: Int
+	payonly: Int
+	discount: Int
+}
+
+type Cart {
+  ID: Int!
+  sku: String!
+  quantity: Int!
+}
+
+type Product {
+  ID: Int!
+  sku: String!
+  name: String!
+  price: Float!
+  quantity: Int!
+}
+
+type Promo {
+  ID: Int!
+	promotype:  String!
+	bonussku: String!
+	minqty: Int!
+	payonly: Int!
+	discount: Int!
+}
+
+type Query {
+  product(sku: String!): Product! 
+  products: [Product!]! 
+  promo(sku: String!): Promo! 
+  promolist: [Promo!]!
+  cartlist: [Cart]! 
+  checkout(input: Carts): ResponseCheckout! 
+}
+
+type Mutation {
+  createProduct(input: NewProduct): ResponseCreated! 
+  updateProduct(input: NewProduct): ResponseUpdated!
+  createPromo(input: NewPromo): ResponseCreated! 
+  updatePromo(input: NewPromo): ResponseUpdated! 
+  addCart(input:NewCart): Cart! 
+}
+
+type ResponseCreated {
+  ID: Int!
+}
+
+type ResponseUpdated {
+  status: String!
+}
+
+type ResponseCheckout {
+  total: Float!
+}
+
+
+
